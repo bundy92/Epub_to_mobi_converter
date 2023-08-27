@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+
+"""
+Unit Tests for EPUB to MOBI Converter
+
+Author: Thomas Bundy
+"""
 
 import unittest
 from app.epub_handler import parse_input_file

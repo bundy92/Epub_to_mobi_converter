@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 MOBI Handler
 
@@ -8,9 +10,10 @@ Author: Thomas Bundy
 
 # Import necessary modules
 from ebooklib import epub
-from ebooklib import mobi
+# from ebooklib import mobi
+# import pymobi #not supported anymore! 
 
-# The MOBI creation logic here
+# The MOBI creation logic
 def create_mobi(content, metadata, mobi_path):
     """
     Create a MOBI file from content and metadata.
@@ -23,22 +26,6 @@ def create_mobi(content, metadata, mobi_path):
     Returns:
         None
     """
-
-    # Create a new MOBI book
-    book = mobi.Mobi()
-
-    # Set metadata
-    book.set_title(metadata["title"])
-    book.set_author(metadata["author"])
-    # ... other metadata fields later...
-
-    # Add content to the MOBI book
-    for chapter in content:
-        book.add_item(mobi.MobiTextItem(chapter))
-
-    # Write the MOBI file
-    with open(mobi_path, "wb") as mobi_file:
-        mobi_file.write(book.get_kindle_content())
-
+    pass
 # Usage
 # create_mobi(content, metadata, "output.mobi")

@@ -1,18 +1,20 @@
+# -*- coding: utf-8 -*-
+
 """
 EPUB to MOBI Converter
 
-This module contains functions to convert EPUB files to MOBI format.
+This module contains functions to convert EPUB files to MOBI/KPF format.
 
 Author: Thomas Bundy
 """
 # Import necessary modules and functions
-from app.epub_handler import parse_epub
-from app.mobi_handler import create_mobi
+import subprocess
+
 
 class ConversionError(Exception):
     pass
 
-def convert_epub_to_mobi(epub_path, mobi_path):
+def convert_epub_to_mobi(epub_path):
     
     """
     Convert an EPUB file to MOBI format.
@@ -24,16 +26,17 @@ def convert_epub_to_mobi(epub_path, mobi_path):
     Returns:
         None
     """
+
     try:
+        # Use Kindle Previewer to convert EPUB to MOBI
+        subprocess.run(["kindlepreviewer", epub_path, "-convert"])
 
-        # Parse EPUB file
-        metadata, content = parse_epub(epub_path)
-
-        # Create MOBI file
-        create_mobi(content, metadata, mobi_path)
-
+        # Return True to indicate successful conversion of the file
+        return True
     except Exception as e:
-        raise ConversionError(f"An error occurred during conversion: {str(e)}")
-    
+        # Handle any errors occured during conversion and return False
+        print(f"An error occurred: {str(e)}")
+        return False
+   
 # Usage
 # convert_epub_to_mobi("input.epub", "output.mobi")

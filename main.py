@@ -1,88 +1,82 @@
+# -*- coding: utf-8 -*-
+
 """
-Main Script for the EPUB to MOBI Converter App
+Main Script for the EPUB to MOBI/KPF Converter App
 
 Author: Thomas Bundy
 """
 
+import threading
+
 import tkinter as tk
-from tkinter import filedialog, messagebox
-from app.converter import convert_epub_to_mobi, ConversionError
-from app.epub_handler import parse_input_file
-from app.mobi_handler import create_mobi
+from tkinter import filedialog, messagebox, ttk
+from app.converter import convert_epub_to_mobi
 
 class ConverterApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("EPUB to MOBI Converter")
+        self.root.title("EPUB to MOBI/KPF Converter")
 
-        self.input_paths = []  # This list stores the selected input file paths
-        self.output_path = tk.StringVar()
-        self.conversion_count = 0  # Counter for the number of conversions
+        self.label_input = tk.Label(root, text="Select EPUB File:")
+        self.label_input.pack(anchor="center")
 
-        self.create_widgets()
+        self.entry_input = tk.Entry(root)
+        self.entry_input.pack(anchor="center")
 
-    def create_widgets(self):
+        self.browse_button1 = tk.Button(root, text="Browse", command=self.browse_input_file)
+        self.browse_button1.pack(anchor="center")
 
-        # Create widgets for input and output paths
-        input_label = tk.Label(self.root, text="Input file:")
-        input_label.pack()
+        self.convert_button = tk.Button(root, text="Convert", command=self.convert)
+        self.convert_button.pack(anchor="center")
 
-        input_entry = tk.Entry(self.root, textvariable=self.input_path)
-        input_entry.pack()
+        # Create a progress bar (initially indeterminate)
+        self.progress_bar = ttk.Progressbar(root, mode="indeterminate")
+        self.progress_bar.pack(anchor="center")  # Center-align progress bar
 
-        browse_button = tk.Button(self.root, text="Browse", command=self.browse_input_file)
-        browse_button.pack()
 
-        output_label = tk.Label(self.root, text="Output file:")
-        output_label.pack()
+    def browse_input_file(self):
+        file_path = filedialog.askopenfilename(filetypes=[("EPUB files", "*.epub")])
+        if file_path:
+            self.entry_input.delete(0, tk.END)
+            self.entry_input.insert(0, file_path)
 
-        output_entry = tk.Entry(self.root, textvariable=self.output_path)
-        output_entry.pack()
+    def start_conversion(self):
+        # Start the progress bar animation
+        self.progress_bar.configure(mode="indeterminate")
+        self.progress_bar.start()
 
-        convert_button = tk.Button(self.root, text="Convert", command=self.convert)
-        convert_button.pack()
-        
-    def browse_input_files(self):
-        """
-        Prompt the user for input EPUB file path.
+        # Create a thread for running kindlepreview
+        conversion_thread = threading.Thread(target=self.convert)
+        conversion_thread.start()
 
-        Returns:
-            epub_path (str): Path to the input EPUB file.
-        """
-
-        file_paths = filedialog.askopenfilenames(filetypes=[("Supported formats", "*.epub")])
-        self.input_paths = list(file_paths)
 
     def convert(self):
-        self.conversion_count = 0  # Reset the conversion count
 
-        if not self.input_paths:
-            messagebox.showerror("Input Error", "Please select at least one input file.")
+        epub_path = self.entry_input.get()
+
+        if not epub_path:
+            messagebox.showerror("Error", "Please select input and output paths.")
             return
 
-        output_file = self.output_path.get()
+       # Call the conversion function using kindlepreview
+        result = convert_epub_to_mobi(epub_path)
+        self.root.update_idletasks()
 
-        if not output_file:
-            messagebox.showerror("Output Error", "Please specify an output file.")
-            return
+       # After conversion, stop the progress bar
 
-        for input_file in self.input_paths:
-            if self.conversion_count >= 5:
-                messagebox.showinfo("Conversion Limit", "Conversion limit reached (5 files).")
-                break
+        if result:
+            messagebox.showinfo("Conversion Complete", "EPUB to MOBI conversion successful.")
+            self.progress_bar.stop()
+        
+        else:
+            messagebox.showerror("Conversion Error", "An error occurred during conversion.")
+            self.progress_bar.stop()
 
-            try:
-                metadata, content = parse_input_file(input_file)
-                create_mobi(content, metadata, output_file)
-                self.conversion_count += 1
-            except ConversionError as ce:
-                messagebox.showerror("Conversion Error", str(ce))
-            except Exception as e:
-                messagebox.showerror("Unexpected Error", f"An unexpected error occurred:\n{str(e)}")
-
-        messagebox.showinfo("Conversion Complete", f"{self.conversion_count} files converted.")
+ 
 
 if __name__ == "__main__":
     root = tk.Tk()
+    # Set the window width and height
+    root.geometry("400x300")  # Adjust the width and height as needed
     app = ConverterApp(root)
     root.mainloop()

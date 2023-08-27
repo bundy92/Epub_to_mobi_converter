@@ -1,13 +1,13 @@
-# EPUB to MOBI Converter
+# EPUB to MOBI/KPF Converter
 
-This is a simple EPUB to MOBI converter app built in Python.
+This is a simple EPUB to MOBI/KPF converter app built in Python 3.11.
 
 ## Features
 
-- Convert EPUB files to MOBI format
-- Support for various formats
+- Convert EPUB files to MOBI/KPF format
+- Support for various formats //coming later
 - Simple GUI for user interaction
-- Error handling for robust conversion
+- Basic error handling
 
 ## Project Structure
 
@@ -25,6 +25,7 @@ This is a simple EPUB to MOBI converter app built in Python.
     │   └── test_mobi_handler.py
     ├── main.py
     ├── requirements.txt
+    ├── LICENSE
     └── README.md
 
 ## Key Components
@@ -45,7 +46,9 @@ This is a simple EPUB to MOBI converter app built in Python.
 
 ## Usage
 
-1. Run `main.py` to start the EPUB to MOBI converter application.
+0. **Install Amazon Kindle Previewer:**
+   - Download and install the [Amazon Kindle Previewer](https://www.amazon.com/gp/feature.html?ie=UTF8&docId=1003018611) tool for your platform. Windows or MacOS.
+1. Run `main.py` to start the EPUB to MOBI/KPF converter application.
 2. Use the provided GUI to select the input EPUB files and set the output paths.
 3. Click "Convert" to initiate the conversion process.
 4. Error messages will be displayed if any issues occur during conversion.
@@ -53,7 +56,13 @@ This is a simple EPUB to MOBI converter app built in Python.
 ## Requirements
 
 - Python 3.x
+- Amazon Kindle Previewer
 - tkinter (for GUI, usually included with Python 3.x)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 
 ## Installation
 
