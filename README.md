@@ -1,11 +1,16 @@
 # EPUB to MOBI/KPF Converter
 
-This is a simple EPUB to MOBI/KPF converter app built in Python 3.11.
+This is a simple EPUB to MOBI/KPF converter app built in Python 3.12.
+
+The README file provides an overview of the project, its features, structure, and usage instructions.
+Key components of the project are described briefly.
+Installation steps, requirements, and legal disclaimer are clearly stated.
+Links to external resources (Amazon Kindle Previewer) are provided for users' convenience.
 
 ## Features
 
 - Convert EPUB files to MOBI/KPF format
-- Support for various formats //coming later
+- Support for various formats (coming later)
 - Simple GUI for user interaction
 - Basic error handling
 
@@ -13,16 +18,6 @@ This is a simple EPUB to MOBI/KPF converter app built in Python 3.11.
 
     epub_to_mobi_converter/
     │
-    ├── app/
-    │   ├── __init__.py
-    │   ├── converter.py
-    │   ├── epub_handler.py
-    │   └── mobi_handler.py
-    ├── tests/
-    │   ├── __init__.py
-    │   ├── test_converter.py
-    │   ├── test_epub_handler.py
-    │   └── test_mobi_handler.py
     ├── main.py
     ├── requirements.txt
     ├── LICENSE
@@ -30,16 +25,6 @@ This is a simple EPUB to MOBI/KPF converter app built in Python 3.11.
 
 ## Key Components
 
-- **app/**: This directory contains the core application modules.
-  - **converter.py**: Implements EPUB to MOBI conversion logic.
-  - **epub_handler.py**: Handles EPUB file parsing and processing.
-  - **mobi_handler.py**: Manages MOBI file creation.
-  
-- **tests/**: Contains unit tests for the application.
-  - **test_converter.py**: Unit tests for the conversion logic.
-  - **test_epub_handler.py**: Unit tests for the EPUB handling.
-  - **test_mobi_handler.py**: Unit tests for MOBI handling.
-  
 - **main.py**: The main application entry point.
 - **README.md**: This file, providing an overview of the project and its structure.
 - **LICENSE**: The project's license file.
@@ -63,14 +48,9 @@ This is a simple EPUB to MOBI/KPF converter app built in Python 3.11.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-
 ## Installation
 
 No installation required. Simply run `main.py` to start the app.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Legal Disclaimer
 
